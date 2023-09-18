@@ -1,3 +1,3 @@
 # tests
 
-adding something gain
+adding something gains
