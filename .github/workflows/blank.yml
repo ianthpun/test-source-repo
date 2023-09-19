@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
       - name: Get all changes
         run: |
-           git log --since=format:relative:1.hour.ago --pretty=format:"%h%x09%an%x09%ae%x09%at" | jq -nR '[
+           git log --since=format:relative:10.minutes.ago --pretty=format:"%h%x09%an%x09%ae%x09%at" | jq -nR '[
                                                    inputs |
                                                    split("\t") |
                                                    {
@@ -51,4 +51,4 @@ jobs:
           echo hello ${{ matrix.inside.email }}
       - name: start
         run: |
-          echo $(date +'%Y-%m-%d') >> ./${{ matrix.inside.email }}/${{ matrix.inside.email }}.txt
+          echo $(date +'%Y-%m-%d') >> ${{ matrix.inside.email }}.txt
