@@ -27,7 +27,8 @@ jobs:
                                                  ]' > changes.json
 
       - name: Set matrix data
-        run: echo "matrix=$(jq -c . < ./changes.json)" >> $GITHUB_OUTPUT
+#        run: echo "matrix=$(jq -c . < ./changes.json)" >> $GITHUB_OUTPUT
+        run: echo "matrix=[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]" >> $GITHUB_OUTPUT
 
   commit-changes:
     runs-on: ubuntu-latest
