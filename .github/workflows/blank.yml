@@ -51,4 +51,4 @@ jobs:
           echo hello ${{ matrix.inside.email }}
       - name: start
         run: |
-          echo $(date +'%Y-%m-%d') >> ${{ matrix.inside.email }}/${{ matrix.inside.email }}.txt
+          echo $(date +'%Y-%m-%d') >> ./${{ matrix.inside.email }}/${{ matrix.inside.email }}.txt
