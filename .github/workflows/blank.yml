@@ -11,6 +11,8 @@ on:
 jobs:
   generate-changes:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v3
       - name: Get all changes
@@ -26,9 +28,10 @@ jobs:
                                                    }
                                                  ]' > changes.json
 
-      - name: Set matrix data
-#        run: echo "matrix=$(jq -c . < ./changes.json)" >> $GITHUB_OUTPUT
-        run: echo "matrix=[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]" >> $GITHUB_OUTPUT
+      - name: Set Matrix
+        id: set-matrix
+        run: echo "matrix=$(jq -c . < ./changes.json)" >> $GITHUB_OUTPUT
+#        run: echo "matrix=[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]" >> $GITHUB_OUTPUT
 
   commit-changes:
     needs: generate-changes
@@ -37,4 +40,4 @@ jobs:
       matrix: ${{ fromJson(needs.generate-changes.outputs.matrix) }}
     steps:
       - name: start
-        run: echo ${{ matrix.name }}
+        run: echo ${{ matrix.project }}
