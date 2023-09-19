@@ -42,6 +42,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJson(needs.generate-changes.outputs.matrix) }}
+    env:
+      email: ${{ matrix.inside.email }}
+      name: ${{ matrix.inside.name }}
+      timestamp: ${{ matrix.inside.timestamp }}
+      commit: ${{ matrix.inside.commit }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -52,11 +57,11 @@ jobs:
           echo hello ${{ matrix.inside.email }}
       - name: append to file
         run: |
-          echo ${{ matrix.inside }} >> ${{ matrix.inside.email }}
+          echo $commit $name $email  >> $email
       - name: commit
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com 
           git add . 
-          git commit -m "update ${{ matrix.inside.email }}" --author "${{ matrix.inside.name }} <${{ matrix.inside.email }}>"
+          git commit -m "check in $commit" --author "$name <$email>"
           git push
