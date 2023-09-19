@@ -54,6 +54,8 @@ jobs:
           echo $(date +'%Y-%m-%d') >> ${{ matrix.inside.email }}
       - name: commit
         run: |
-          git add ${{ matrix.inside.email }}
+          git config --global user.email "${{ matrix.inside.email }}"
+          git config --global user.name "${{ matrix.inside.name }}"
+          git add . 
           git commit -m "update ${{ matrix.inside.email }}" --author "${{ matrix.inside.name }} <${{ matrix.inside.email }}>"
           git push
