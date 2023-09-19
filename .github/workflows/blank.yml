@@ -31,8 +31,6 @@ jobs:
       - name: Set Matrix
         id: set-matrix
         run: echo "matrix=$(jq -c . < ./changes.json)" >> $GITHUB_OUTPUT
-#        run: echo "matrix=[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]" >> $GITHUB_OUTPUT
-#        run: echo "matrix={\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}" >> $GITHUB_OUTPUT
 
   commit-changes:
     needs: generate-changes
@@ -42,4 +40,4 @@ jobs:
     steps:
       - name: start
         run: |
-          echo "hellO"
+          echo ${{ matrix.email }}
