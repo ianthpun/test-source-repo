@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
       - name: Get all changes
         run: |
-           git log --since=format:relative:20.minutes.ago --pretty=format:"%h%x09%an%x09%ae%x09%at" | jq -nR '[
+           git log --since=format:relative:1.hour.ago --pretty=format:"%h%x09%an%x09%ae%x09%at" | jq -nR '[
                                                    inputs |
                                                    split("\t") |
                                                    {
@@ -36,8 +36,6 @@ jobs:
       - name: Set Matrix
         id: set-matrix
         run: echo "matrix=$(jq -c . < ./changes.json)" >> $GITHUB_OUTPUT
-#        run: echo "matrix={\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}" >> $GITHUB_OUTPUT
-
 
   commit-changes:
     needs: generate-changes
@@ -46,20 +44,8 @@ jobs:
       matrix: ${{ fromJson(needs.generate-changes.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          repository: 'ianthpun/test-dest-repo'
       - name: start
         run: |
-          echo hello ${{ matrix.inside.email }}
-      - name: create file
-        run: |
-          echo hello ${{ matrix.inside.email }} > ${{ matrix.inside.commit }}.md
-      - name: Push test file
-        uses: dmnemec/copy_file_to_another_repo_action@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source_file: ${{ matrix.inside.commit }}.md
-          destination_repo: 'ianthpun/test-dest-repo'
-          destination_folder: 'ianthpun'
-          user_email: ${{ matrix.inside.email }}
-          user_name: ${{ matrix.inside.name }}
-          commit_message: 'some custom message'
+          echo $(date +'%Y-%m-%d') >> ${{ matrix.include.email }}/${{ matrix.include.email }}.txt
