@@ -52,7 +52,7 @@ jobs:
           echo hello ${{ matrix.inside.email }}
       - name: append to file
         run: |
-          echo $(date +'%Y-%m-%d') >> ${{ matrix.inside.email }}
+          echo ${{ matrix.inside }} >> ${{ matrix.inside.email }}
       - name: commit
         run: |
           git config user.name github-actions
