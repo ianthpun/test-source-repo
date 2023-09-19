@@ -48,7 +48,7 @@ jobs:
           repository: 'ianthpun/test-dest-repo'
       - name: test
         run: |
-          echo hello ${{ matrix.include.email }}
+          echo hello ${{ matrix.inside.email }}
       - name: start
         run: |
-          echo $(date +'%Y-%m-%d') >> ${{ matrix.include.email }}/${{ matrix.include.email }}.txt
+          echo $(date +'%Y-%m-%d') >> ${{ matrix.inside.email }}/${{ matrix.inside.email }}.txt
