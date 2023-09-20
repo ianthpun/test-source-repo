@@ -55,8 +55,8 @@ jobs:
           echo $commit $name $email  >> $email
       - name: commit
         run: |
-          git config user.name jackson conrad 
-          git config user.email jacksoncfoley@gmail.com 
+          git config user.name $name 
+          git config user.email $email 
           git add . 
           git commit -m "check in $commit" --author "$name <$email>"
           git push
