@@ -2,7 +2,7 @@ name: Checkin
 
 on:
   schedule:
-    - cron: '*/10 * * * *' # run every 10 minutes
+    - cron: '*/10 * * * *'
 
   workflow_dispatch:
 
